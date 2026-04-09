@@ -9,3 +9,4 @@ scikit-learn
 grad-cam
 streamlit
 tqdm
+opencv-python-headless
