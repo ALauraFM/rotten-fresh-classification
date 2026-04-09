@@ -84,7 +84,7 @@ def predict(image: Image.Image):
 
 # ── UI ────────────────────────────────────────────────────
 st.title("🍎 FruitGuard")
-st.markdown("**AI-powered fruit quality inspection** — Upload a photo to detect freshness.")
+st.markdown("**AI-powered fruit quality inspection** — Upload a photo to detect freshness. For now, avaliabe fruits are apples, bananas and oranges.")
 st.divider()
 
 uploaded = st.file_uploader("Upload a fruit image", type=["jpg", "jpeg", "png"])
