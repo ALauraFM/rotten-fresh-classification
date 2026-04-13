@@ -1,14 +1,28 @@
+import os
+import sys
 import torch
 import torch.nn as nn
 from torch.optim import Adam
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from tqdm import tqdm
-from src.dataset import get_dataloaders
-from src.model import build_model
-import json
 from pathlib import Path
 
-def train(data_dir="data/raw/dataset", epochs=15, batch_size=32, lr=1e-3):
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+
+from src.dataset import get_dataloaders
+from src.model import build_model
+from dotenv import load_dotenv
+import json
+
+
+def train(data_dir=None, epochs=15, batch_size=32, lr=1e-3):
+    load_dotenv()
+    if data_dir is None:
+        data_dir = os.getenv("DATA_DIR")
+        if not data_dir:
+            raise ValueError("DATA_DIR not found in .env file")
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 

@@ -10,3 +10,4 @@ grad-cam
 streamlit
 tqdm
 opencv-python-headless
+python-dotenv

@@ -37,3 +37,20 @@ def get_dataloaders(data_dir: str, batch_size=32):
                               shuffle=False, num_workers=2)
 
     return train_loader, val_loader, train_dataset.classes
+
+
+def get_test_dataloader(data_dir: str = None, test_dir: str = None, batch_size=32):
+    if test_dir:
+        test_path = Path(test_dir)
+    elif data_dir:
+        test_path = Path(data_dir) / "test"
+    else:
+        raise ValueError("Either data_dir or test_dir must be provided")
+
+    _, val_tf = get_transforms()
+
+    test_dataset = datasets.ImageFolder(test_path, transform=val_tf)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size,
+                             shuffle=False, num_workers=2)
+
+    return test_loader, test_dataset.classes

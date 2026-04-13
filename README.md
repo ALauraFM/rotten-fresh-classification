@@ -20,6 +20,7 @@ This is particularly useful for:
 * Interactive web interface using Streamlit
 * Support for custom image uploads
 * Automatic confidence score display
+* Final test evaluation using a separate `test/` split
 
 ## Project Structure
 
@@ -33,11 +34,53 @@ This is particularly useful for:
 │   └── dataset.py
 │   └── model.py
 │   └── train.py
+│   └── evaluate_test.py
 ├── app.py
 ├── requirements.txt
 ├── .gitignore
 └── README.md
 ```
+
+## Environment Setup
+
+Create a `.env` file from `.env.example` and set the dataset paths:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` to include:
+
+```env
+DATA_DIR=/path/to/data/raw/dataset
+TEST_DIR=/path/to/data/raw/dataset/test
+```
+
+`DATA_DIR` é usado para treinamento e validação.
+`TEST_DIR` deve apontar para o conjunto final de teste criado a partir da pasta de validação.
+
+## Training
+
+Train the model using o dataset configurado no `.env`:
+
+```bash
+python3 src/train.py
+```
+
+O script usa `DATA_DIR` do `.env` e salva o melhor modelo em `best_model.pth`.
+
+## Test Evaluation
+
+Após criar a pasta `test/` a partir do conjunto de validação, execute a avaliação final:
+
+```bash
+python3 src/evaluate_test.py
+```
+
+O script carrega `best_model.pth` a partir do diretório raiz do projeto e gera:
+
+* `outputs/test_classification_report.txt`
+* `outputs/confusion_matrix_test.png`
 
 ## Installation
 
@@ -66,6 +109,7 @@ pip install -r requirements.txt
 To start the Streamlit app:
 
 ```bash
+cd app
 streamlit run app.py
 ```
 
